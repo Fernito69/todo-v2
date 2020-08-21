@@ -1,4 +1,4 @@
-import { Component, Prop, State, Listen, Element, h, Event, Watch } from '@stencil/core';
+import { Component, Prop, State, Listen, Element, h, Watch } from '@stencil/core';
 import { modalController } from '@ionic/core';
 import AppState from "../../services/services"
 import {callProjectsAndTasks} from "../../dbinteractions"
@@ -13,12 +13,42 @@ import {saveNewProject} from "../../dbinteractions"
 
 export class AppDashboard {
 
-    @Element() el: any;
+    //LIFECYCLE
+    componentWillLoad() {   
+        this.activeUser = {...AppState.activeUser()}
+        this.auth = AppState.auth()        
+
+        console.log(`component will load FROM DASHBOARD`)
+
+        //CHECK FOR AUTH
+        if (!this.auth) {
+            this.navCtrl = document.querySelector("ion-router")
+            this.navCtrl.push("/", "forward")
+            return
+        }
+
+        //GETS PROJECTS FROM USER
+        if (this.auth)
+            this.callProjectsAndTasksFromUser(this.activeUser)                      
+    }
+
+    componentWillRender() {
+        console.log("component will render FROM DASHBOARD")
+    }
 
     //VARS
     private navCtrl: HTMLIonRouterElement
 
-    //STATE
+    //HOOKS
+    @Element() el: any;
+
+    //PROPS
+    @Prop() shouldload: number
+    @Watch("activeProject") 
+    watchHandler() {
+        console.log(`from watch`)
+    }  
+
     @State() projects: Array<{
         projectname: string
         project_id: string
@@ -34,16 +64,8 @@ export class AppDashboard {
         name: string
         id: string
         email: string
-    }
-
-    //PROPS
-    @Prop() shouldload: number
-    @Watch("activeProject") 
-    watchHandler() {
-        console.log(`from watch`)
-    }    
+    }      
    
-    //LISTEN
     @Listen('ionModalDidDismiss', { target: 'body' })
     async modalDidDismiss(e: CustomEvent) {
         if (e) {
@@ -55,26 +77,7 @@ export class AppDashboard {
                 this.callProjectsAndTasksFromUser(this.activeUser)
             }
         }
-    }
-
-    componentWillLoad() {   
-        this.activeUser = {...AppState.activeUser()}
-        this.auth = AppState.auth()        
-
-        console.log(`component will load DASHBOARD`)
-
-        //CHECK FOR AUTH
-        if (!this.auth) {
-            this.navCtrl = document.querySelector("ion-router")
-            this.navCtrl.push("/", "forward")
-            return
-        }
-
-        //GETS PROJECTS FROM USER
-        if (this.auth)
-            this.callProjectsAndTasksFromUser(this.activeUser)                      
-    }
-
+    }    
 
     //FUNCTIONS
     handleLogOut() {
@@ -140,8 +143,7 @@ export class AppDashboard {
                     </ion-buttons>
                 </ion-toolbar>
             </ion-header>
-            ,               
-            //this.projects[0].projectname !== ""
+            ,                           
             this.projects.length > 0
             ?
             <ion-content> 
@@ -199,9 +201,3 @@ export class AppDashboard {
     }
 }
 
-/* <div class="spinner-container">
-                        <div class="spinner-container2">
-                            <ion-spinner color="dark" class="loading-spinner"></ion-spinner>
-                        </div>
-                    </div>
-                     */

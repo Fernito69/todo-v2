@@ -1,4 +1,4 @@
-import { Component, State, Event, h } from '@stencil/core';
+import { Component, State, h } from '@stencil/core';
 import AppState from "../../services/services"
 import {logIn} from "../../dbinteractions"
 import { AxiosResponse } from 'axios';
@@ -12,19 +12,9 @@ import { alertController } from '@ionic/core';
 
 export class AppLogin {
 
-    private navCtrl: HTMLIonRouterElement
-
-    //STATE
-    @State() userFields: 
-    {
-        email: string
-        password: string
-    } = {email: "fernito@gmail.com", password: "123456"};
-    @State() loadingUser: boolean = false
-
     //LIFECYCLE
     componentWillLoad() {
-        console.log("component will load LOGIN")
+        console.log("component will load FROM LOGIN")
         AppState.setAuth(false)
         AppState.setActiveUser({
             name: "",
@@ -37,6 +27,23 @@ export class AppLogin {
         })
     }
 
+    componentWillRender() {
+        console.log("component will render FROM LOGIN")
+    }
+
+
+    //VARS
+    private navCtrl: HTMLIonRouterElement
+
+    //HOOKS
+    @State() userFields: 
+    {
+        email: string
+        password: string
+    } = {email: "fernito@gmail.com", password: "123456"};
+    @State() loadingUser: boolean = false
+
+    
     //FUNCTIONS
     handleChange(e, field) {
         this.userFields = {

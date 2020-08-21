@@ -10,12 +10,33 @@ import {editAndSaveProject} from "../../dbinteractions"
 
 export class AppProject {
 
+    //LIFECYCLE
+    componentWillLoad() {
+        console.log("component will load FROM PROJECT")
+        //console.log(AppState.activeProject())
+
+        //CHECK FOR AUTH
+        if (AppState.auth() !== true) {
+            this.navCtrl = document.querySelector("ion-router")
+            this.navCtrl.push("/", "forward")
+            return
+        }
+
+        //GETS PROJECTS FROM USER
+        if (AppState.auth()) {
+            this.callTasksFromProject()       
+        }                 
+    }
+
+    componentWillRender() {
+        console.log("component will render FROM PROJECT")
+    }
+
+    //VARS
     private navCtrl: HTMLIonRouterElement
     editProjectInput!: HTMLIonInputElement;
 
-    
-    
-
+    //HOOKS
     @Element() el: HTMLElement
 
     @Prop() project_id: string
@@ -30,24 +51,7 @@ export class AppProject {
     @State() projectToEdit: {
         projectname: string
         project_id: string
-    } = {...AppState.activeProject()}
-
-    componentWillLoad() {
-        console.log("component will load PROJECT")
-        console.log(AppState.activeProject())
-
-        //CHECK FOR AUTH
-        if (AppState.auth() !== true) {
-            this.navCtrl = document.querySelector("ion-router")
-            this.navCtrl.push("/", "forward")
-            return
-        }
-
-        //GETS PROJECTS FROM USER
-        if (AppState.auth()) {
-            this.callTasksFromProject()       
-        }                 
-    }
+    } = {...AppState.activeProject()}    
 
     //FUNCTIONS
     handleLogOut() {
@@ -107,10 +111,6 @@ export class AppProject {
         console.log(AppState.activeProject())
     }
 
-    componentDidRender() {
-        console.log("component did render")
-    }
-
     startEditProject() {
         this.editingProject = true
         
@@ -136,13 +136,17 @@ export class AppProject {
                     this.editingProject
                     ?
                     <ion-input
+                        onKeyPress={(e: KeyboardEvent) => {
+                            if (e.key == "Enter")
+                                this.saveProject()
+                        }}
                         ref={(el) => this.editProjectInput = el as HTMLIonInputElement} 
                         onIonBlur={this.saveProject}
                         class="edit-project"
                         id="hola"
                         type="text"
                         value={this.projectToEdit.projectname}
-                        onIonChange={e => {this.projectToEdit.projectname = e.detail.value;console.log(AppState.activeProject()) }}
+                        onIonChange={e => {this.projectToEdit.projectname = e.detail.value}} //;console.log(AppState.activeProject()) }}
                     ></ion-input>
                     :
                     <ion-title class="ion-text-start">{this.projectToEdit.projectname}</ion-title>
@@ -160,9 +164,7 @@ export class AppProject {
                         </ion-button>    
                         }
                         
-                        <ion-button color="danger" onClick={()=>{}}>
-                            <ion-icon name="trash-outline"></ion-icon>
-                        </ion-button>
+                        
                     </ion-buttons>
                     <ion-buttons slot="end">
                         <ion-button onClick={this.handleLogOut}>
@@ -171,8 +173,7 @@ export class AppProject {
                     </ion-buttons>
                 </ion-toolbar>
             </ion-header>
-            ,            
-            
+            ,  
             this.tasks.length > 0
             ?
             <ion-content>
@@ -195,3 +196,7 @@ export class AppProject {
         ]
     }
 }
+
+/*<ion-button color="danger" onClick={()=>{}}>
+<ion-icon name="trash-outline"></ion-icon>
+</ion-button>*/

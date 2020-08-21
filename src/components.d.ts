@@ -10,6 +10,7 @@ export namespace Components {
         "user_id": string;
     }
     interface AppDashboard {
+        "shouldload": number;
     }
     interface AppHome {
     }
@@ -92,6 +93,7 @@ declare namespace LocalJSX {
         "user_id"?: string;
     }
     interface AppDashboard {
+        "shouldload"?: number;
     }
     interface AppHome {
     }

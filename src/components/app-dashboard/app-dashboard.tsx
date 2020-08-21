@@ -35,7 +35,13 @@ export class AppDashboard {
         id: string
         email: string
     }
-    
+
+    //PROPS
+    @Prop() shouldload: number
+    @Watch("activeProject") 
+    watchHandler() {
+        console.log(`from watch`)
+    }    
    
     //LISTEN
     @Listen('ionModalDidDismiss', { target: 'body' })
@@ -52,7 +58,7 @@ export class AppDashboard {
     }
 
     componentWillLoad() {   
-        this.activeUser = AppState.activeUser()
+        this.activeUser = {...AppState.activeUser()}
         this.auth = AppState.auth()        
 
         console.log(`component will load DASHBOARD`)
@@ -60,7 +66,7 @@ export class AppDashboard {
         //CHECK FOR AUTH
         if (!this.auth) {
             this.navCtrl = document.querySelector("ion-router")
-            this.navCtrl.push("/", "back")
+            this.navCtrl.push("/", "forward")
             return
         }
 

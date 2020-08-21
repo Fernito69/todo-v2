@@ -3,7 +3,7 @@ import AppState from "../../services/services"
 import {logIn} from "../../dbinteractions"
 import { AxiosResponse } from 'axios';
 import { alertController } from '@ionic/core';
-import { EventEmitter } from '@ionic/core/dist/types/stencil-public-runtime';
+
 
 @Component({
     tag: "app-login",
@@ -83,7 +83,7 @@ export class AppLogin {
         //IF AUTHENTICATED, REDIRECT
         if (AppState.auth()) {
             this.navCtrl = document.querySelector("ion-router")
-            this.navCtrl.push("/dashboard", "forward")
+            this.navCtrl.push("/dashboard/1", "forward")
         }        
 
         

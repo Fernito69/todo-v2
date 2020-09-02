@@ -89,7 +89,7 @@ export class PageProject {
 
     async addNewTask() { 
 
-        this.slidingItemP.closeOpened()
+        this.slidingItemP && this.slidingItemP.closeOpened()
 
         //VALIDATION     
         if (this.newTask === "") {

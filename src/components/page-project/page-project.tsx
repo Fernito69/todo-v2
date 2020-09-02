@@ -104,9 +104,7 @@ export class PageProject {
        
         //RESET STATE
         this.addingTask = false    
-        this.newTask = ""    
-        
-        
+        this.newTask = "" 
     }
 
     async presentTaskDeleteAlert(task) {
@@ -214,7 +212,7 @@ export class PageProject {
                         placeholder="Add new task"
                         value={this.newTask}
                         onIonChange={e => {this.newTask = e.detail.value}}
-                        onIonBlur={() => {this.addingTask = false; this.newTask = ""}}
+                        //onIonBlur={() => {this.addingTask = false; this.newTask = ""}}
                         onKeyPress={(e: KeyboardEvent) => {                                
                             if (e.key == "Enter")
                                 this.addNewTask()                                                               
@@ -222,7 +220,7 @@ export class PageProject {
                     ></ion-input>
                     <ion-buttons>
                         <ion-button 
-                            onClick={() => {this.addNewTask(); this.addingTask = false; this.newTask = ""}}
+                            onClick={() => {this.addNewTask()}}
                             fill="outline" 
                             color="success" 
                             slot="end"

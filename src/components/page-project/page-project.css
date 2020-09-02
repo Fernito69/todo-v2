@@ -1,0 +1,22 @@
+.edit-project {
+    background-color: white;
+    color: black;
+}
+
+.add-button {
+    --padding-top: 5px;
+    --padding-start: 10;
+    --border-color: red;
+}
+
+.task-item-finished ion-label {
+    border-left: 2px solid;
+    padding-left: 10px;
+    border-left-color: rgb(0,200,0);
+}
+
+.task-item-unfinished ion-label {
+    border-left: 2px solid;
+    padding-left: 10px;
+    border-left-color: rgb(200,0,0);
+}

@@ -1,0 +1,37 @@
+.project-item ion-label {
+    border-left: 2px solid;
+    padding-left: 10px;
+    border-left-color: rgb(120,0,0);
+}
+
+.icon-big {
+    font-size: 24px;
+}
+
+.outer-pie {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    border-radius: 50%;
+}
+
+.inner-pie {
+    width: 16px; 
+    height: 16px;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 50%;
+    background-image: conic-gradient(white 0 360deg);    
+}
+
+.pie-container {    
+    margin: auto;
+    position: relative;
+}
+
+.pie-container p {
+    align-items: center;
+    font-size: 10px;
+}

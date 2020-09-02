@@ -1,0 +1,53 @@
+.project-item ion-label {
+    border-left: 2px solid;
+    padding-left: 10px;
+    border-left-color: rgb(120,0,0);
+}
+
+.spinner-container {
+    background-color: rgb(200, 200, 200);
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.spinner-container2 {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    opacity: 1;
+    width: min-content;
+    height: min-content;
+}
+
+.item-avatar  {     
+    width:100% !important;  
+    height : 100% !important;  
+    max-width: 100px !important;  
+    max-height: 100px !important; 
+    }
+
+.outer-pie1 {    
+    border-radius: 50%;
+}
+
+.inner-pie1 {
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 50%;
+    background-image: conic-gradient(white 0 360deg); 
+    text-align: center;           
+    vertical-align: middle;
+    line-height: 65px;   
+}
+
+.pie-container1 {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    position: relative;    
+}

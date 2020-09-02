@@ -169,8 +169,18 @@ export class PageProject {
                                 </ion-label> 
                             }
                             
-                            <ion-checkbox slot="end" color="success" checked={task.taskfinished} onIonChange={() => this.setTaskDone(task)}/>
-                           
+                            <ion-list slot="end" lines="none">
+                                <ion-item>
+                                    {
+                                        task.taskfinished
+                                        ?
+                                        <ion-text style={{"font-size":"14px"}} color="success">Done</ion-text>
+                                        :
+                                        <ion-text style={{"font-size":"14px"}} color="danger">Not done</ion-text>
+                                    }
+                                    <ion-checkbox slot="end" color="success" checked={task.taskfinished} onIonChange={() => this.setTaskDone(task)}/>
+                                </ion-item>
+                            </ion-list>
                         </ion-item>   
 
                         <ion-item-options side="end">
@@ -210,6 +220,14 @@ export class PageProject {
                                 this.addNewTask()                                                               
                         }}
                     ></ion-input>
+                    <ion-buttons>
+                        <ion-button 
+                            onClick={() => {this.addNewTask(); this.addingTask = false; this.newTask = ""}}
+                            fill="outline" 
+                            color="success" 
+                            slot="end"
+                    >{this.newTask !== "" ? "Save" : "Cancel"}</ion-button>                        
+                    </ion-buttons>
                 </ion-item>
             </ion-list>
         ]

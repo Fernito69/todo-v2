@@ -5,7 +5,7 @@ import { avgCompletion } from "../../helpers/utils"
 import { AuthService } from '../../services/authentication-service';
 import { databaseService } from '../../services/database-service';
 import { menuController } from '@ionic/core';
-import {get} from "../../services/storage"
+import { get, set } from "../../services/storage"
 
 @Component({
     tag: "page-dashboard",
@@ -43,17 +43,9 @@ export class PageDashboard {
         }, 500)
     }      
 
-    async componentWillRender() {
-        //HACK
-        setTimeout(async () => {
-            this.globalCompletion = await get("globalCompletion")
-        }, 500)
-    }
-  
     @Listen('ionRouteWillChange', { target: 'body' })
     async updateStatistics() {        
-        await avgCompletion(this.projects)
-        
+        await avgCompletion(this.projects)        
         //HACK
         setTimeout(async () => {
             this.globalCompletion = await get("globalCompletion")
@@ -70,6 +62,16 @@ export class PageDashboard {
         await databaseService.watchProjects(this.activeUser.uid, projects => {        
             this.projects = projects.reverse()
         })
+
+        //update statistics
+        //HACK        
+        setTimeout(async () => {
+            await avgCompletion(this.projects)
+        }, 500)
+        
+        setTimeout(async () => {
+            this.globalCompletion = await get("globalCompletion")
+        }, 1000)
     }    
     @Listen("beginEditProject")
     hideAddButton() {
@@ -81,7 +83,8 @@ export class PageDashboard {
     }
     
     //FUNCTIONS
-    handleLogOut() {
+    async handleLogOut() {
+        await set("globalCompletion", {totalTasks: 0, completedTasks: 0, finalNumber: 0})
         AuthService.logout();
         menuController.close('first');
     }   
@@ -132,7 +135,7 @@ export class PageDashboard {
         ]        
     }
 
-    printPieTart(percentage: number, size: number) {                  
+    printPieTart(percentage: number, size: number) {                     
         return (  
             
                 <div class="outer-pie" style={{
@@ -147,7 +150,7 @@ export class PageDashboard {
                         "line-height": `${size*.65}px`
                     }}
                     >
-                        <ion-text style={{"font-size": `${size*.15}px`}} color="dark">{`${this.globalCompletion.finalNumber}%`}</ion-text>
+                        <ion-text style={{"font-size": `${size*.15}px`}} color="dark">{`${this.globalCompletion.finalNumber !== undefined ? this.globalCompletion.finalNumber : 0 }%`}</ion-text>
                     </div>
                 </div>                   
         )        
@@ -188,23 +191,19 @@ export class PageDashboard {
                         </ion-label>
                     </ion-item-divider>
                     <ion-list>
-                    
                         {
                             this.printStatisticRow("To-do lists:", this.projects.length)
                         }
                         {
-                            this.printStatisticRow("Total tasks:", `${this.globalCompletion.totalTasks}`)
+                            this.printStatisticRow("Total tasks:", `${this.globalCompletion.totalTasks !== undefined ? this.globalCompletion.totalTasks : 0}`)
                         }
                         {
-                            this.printStatisticRow("Total completed tasks:", `${this.globalCompletion.completedTasks}`)
+                            this.printStatisticRow("Total completed tasks:", `${this.globalCompletion.completedTasks !== undefined ? this.globalCompletion.completedTasks : 0}`)
                         }
                         {
-                            this.printStatisticRow("Avg. % of completion:", this.printPieTart(+this.globalCompletion.finalNumber, 70))
+                            this.printStatisticRow("Avg. % of completion:", this.printPieTart(this.globalCompletion.finalNumber !== undefined ? +this.globalCompletion.finalNumber : 0, 70))
                         }
                     </ion-list>
-
-                
-
                 </ion-content>
             </ion-menu>
         ]

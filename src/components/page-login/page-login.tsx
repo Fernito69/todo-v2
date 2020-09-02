@@ -1,5 +1,6 @@
-import { Component, State, h } from '@stencil/core';
+import { Component, State, h, Listen } from '@stencil/core';
 import {AuthService} from "../../services/authentication-service"
+import {set} from "../../services/storage"
 
 
 @Component({
@@ -22,7 +23,16 @@ export class PageLogin {
           }
           this.user = user
         });
+
+        //reset stats
+        await set("globalCompletion", {totalTasks: 0, completedTasks: 0, finalNumber: 0})
     }
+
+    @Listen('ionRouteWillChange', { target: 'body' })
+    async updateStatistics() {   
+        //reset stats
+        await set("globalCompletion", {totalTasks: 0, completedTasks: 0, finalNumber: 0})
+    }     
 
     //@ts-ignore
     async authenticate(event, provider) {

@@ -136,60 +136,71 @@ export class PageDashboard {
     }
 
     printPieTart(percentage: number, size: number) {                     
-        return (  
-            
-                <div class="outer-pie" style={{
-                    "background-image": `conic-gradient(green ${percentage.toString() === "NaN" ? 0 : 360 * percentage / 100}deg, red 0 360deg)`,
-                    "width": `${size}px`,
-                    "height": `${size}px`
-                }}>
-                    <div class="inner-pie"
-                    style={{
-                        "width": `${size/1.5}px`,
-                        "height": `${size/1.5}px`,
-                        "line-height": `${size*.65}px`
-                    }}
-                    >
-                        <ion-text style={{"font-size": `${size*.15}px`}} color="dark">{`${this.globalCompletion.finalNumber !== undefined ? this.globalCompletion.finalNumber : 0 }%`}</ion-text>
-                    </div>
-                </div>                   
+        return (              
+            <div class="outer-pie" style={{
+                "background-image": `conic-gradient(green ${percentage.toString() === "NaN" ? 0 : 360 * percentage / 100}deg, red 0 360deg)`,
+                "width": `${size}px`,
+                "height": `${size}px`
+            }}>
+                <div class="inner-pie"
+                style={{
+                    "width": `${size/1.5}px`,
+                    "height": `${size/1.5}px`,
+                    "line-height": `${size*.65}px`
+                }}
+                >
+                    <ion-text style={{"font-size": `${size*.15}px`}} color="dark">{`${this.globalCompletion.finalNumber !== undefined ? this.globalCompletion.finalNumber : 0 }%`}</ion-text>
+                </div>
+            </div>    
         )        
     }
         
     renderMenu() {
         return [
             <ion-menu side="start" menuId="first" contentId="main">
+
                 <ion-header>
                     <ion-toolbar color="primary">
                         <ion-title>Options</ion-title>
                     </ion-toolbar>
                 </ion-header>
+
                 <ion-content class="ion-padding">
                     <ion-grid>
                         <ion-row>
+
                             <ion-col>
                                 <ion-avatar class="item-avatar">
                                     <img src={this.activeUser.photoURL}></img>
                                 </ion-avatar>
                             </ion-col>
+
                             <ion-col>
                                 <h3>{`Hello ${this.activeUser.displayName.split(" ")[0]}!`}</h3>
                             </ion-col>
+
                         </ion-row>
-                    </ion-grid>                       
+                    </ion-grid>
+
                     <ion-list>
+
                         <ion-item 
                             class="ion-text-end"
                             onClick={() => this.handleLogOut()}
                         >Log out&nbsp;<ion-icon slot="end" name="log-out-outline"></ion-icon></ion-item>   
+
                         <ion-item>Other options (not impl.)<ion-icon slot="end" name="ellipsis-horizontal-outline"></ion-icon></ion-item> 
+
                         <ion-item></ion-item>
+
                     </ion-list>
+
                     <ion-item-divider color="primary">
                         <ion-label>
                             Statistics
                         </ion-label>
                     </ion-item-divider>
+
                     <ion-list>
                         {
                             this.printStatisticRow("To-do lists:", this.projects.length)
@@ -204,7 +215,9 @@ export class PageDashboard {
                             this.printStatisticRow("Avg. % of completion:", this.printPieTart(this.globalCompletion.finalNumber !== undefined ? +this.globalCompletion.finalNumber : 0, 70))
                         }
                     </ion-list>
+
                 </ion-content>
+
             </ion-menu>
         ]
     }
@@ -213,7 +226,7 @@ export class PageDashboard {
     render() {
         
         return [
-           this.renderMenu()
+            this.renderMenu()
             ,
             <ion-header>
                 <ion-toolbar color="primary">
@@ -225,9 +238,7 @@ export class PageDashboard {
                     </ion-buttons>
                 </ion-toolbar>
             </ion-header>
-
-            ,    
-                                   
+            , 
             this.projects.length > 0
             ?
             <ion-content id="main"> 
@@ -246,17 +257,13 @@ export class PageDashboard {
             :
             <ion-content id="main" class="ion-padding ion-text-center">
                 <h4>No to-do lists so far! Add your first list</h4>                
-            </ion-content>                  
-            
+            </ion-content>
             ,
-            
             this.showAddButton &&
             <ion-fab slot="fixed" vertical="bottom" horizontal="end" >
                 <ion-fab-button onClick={this.presentModal}><ion-icon name="add-outline"></ion-icon></ion-fab-button>
             </ion-fab>
-
             ,   
-
             this.loading &&
             <part-loading></part-loading> 
         ]

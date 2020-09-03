@@ -94,8 +94,7 @@ export class PartProjectSnippet {
             <ion-item-sliding
                 ref={(el) => this.slidingItem = el as HTMLIonItemSlidingElement}
                 onClick={() => this.slidingItem.close()}                
-            >               
-
+            >         
                 <ion-item 
                     href={`/project/${this.project_id}`}
                     routerDirection="forward"
@@ -112,14 +111,12 @@ export class PartProjectSnippet {
                                         this.tasks[0] !== undefined ? " tasks" : " tasks so far"}
                                         `}
                                     </h3>
-                                                        
                                 </ion-label>          
                             </ion-col>
                             <ion-col size="1.5" class="pie-container ion-text-center">
                                 {this.pieChart(completionPercentage(this.tasks))}
                             </ion-col>
                             <ion-col size="2" class="pie-container ion-text-center">
-                               
                                     <p>
                                        {`${
                                         this.tasks[0] !== undefined 
@@ -177,7 +174,6 @@ export class PartProjectSnippet {
             this.renderInput()
         ]        
     }
-
 }
 
 //"width": "8px", "height": "8px", "margin-left": "auto", "margin-right": "auto", "margin-top": "auto", "margin-bottom": "auto", "border-radius": "50%", "background-image": `conic-gradient(white 0 360deg)`

@@ -60,14 +60,12 @@ export class PartAddProjectModal {
         return [
             <ion-header>
                 <ion-toolbar color="primary">
-                    <ion-title class="ion-text-center">Add new project</ion-title>
+                    <ion-title class="ion-text-center">Add new to-do list</ion-title>
                 </ion-toolbar>
             </ion-header>
-            
             ,
-
             <ion-item>
-                <ion-label position="floating">Project name</ion-label>
+                <ion-label position="floating">A name for your To-do list</ion-label>
                 <ion-input
                     ref={(el) => this.projectInput = el as HTMLIonInputElement} 
                     value={this.newProject}
@@ -80,9 +78,7 @@ export class PartAddProjectModal {
                     }}
                 ></ion-input>
             </ion-item>
-            
             ,
-            
             <ion-grid>
                 <ion-row>
                     <ion-col>

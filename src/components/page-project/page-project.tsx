@@ -160,9 +160,7 @@ export class PageProject {
                                 >
                                 </ion-input>
                                 :
-                                <ion-label
-                                    onClick={() => {this.startEditTask(task)}}
-                                >
+                                <ion-label>
                                     <h2>{task.taskname}</h2>
                                 </ion-label> 
                             }
@@ -235,10 +233,8 @@ export class PageProject {
     render() {
         return [
             this.loading &&
-            <part-loading></part-loading>  
-
-            ,       
-
+            <part-loading></part-loading>
+            ,
             <ion-header>
                 <ion-toolbar color="primary">
                 <ion-buttons slot="start">
@@ -247,9 +243,7 @@ export class PageProject {
                     <ion-title class="ion-text-center">{this.currentProject.projectname}</ion-title>                                        
                 </ion-toolbar>
             </ion-header>
-
-            ,  
-
+            ,
             this.tasks.length > 0
             ?
             this.renderTasks()
@@ -263,11 +257,9 @@ export class PageProject {
                     <h4>No tasks so far! Add your first task</h4>                
                 }                
             </ion-content>
-
             ,
-
             !this.addingTask && !this.editTask &&
-            <ion-fab slot="fixed" vertical="bottom" horizontal="end" >
+            <ion-fab slot="fixed" vertical="bottom" horizontal="end">
                 <ion-fab-button color="secondary" class="add-button" onClick={() => this.startAddTask()}><ion-icon name="add-outline"></ion-icon></ion-fab-button>
             </ion-fab>
         ]
